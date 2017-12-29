@@ -1,13 +1,14 @@
 <!DOCTYPE html>
 <html>
-<head lang="en">
-    <meta charset="UTF-8">
-    <title>360分享</title>
-    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0"/>
+<head>
+    <title>360</title>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=0"/>
+
     <!-- 避免IE使用兼容模式 -->
     <meta http-equiv="X-UA-Compatible" content="IE=edge,Chrome=1"/>
-    <meta name="description" content="360分享"/>
-    <meta name="keywords" content="360分享"/>
+    <meta name="description" content="360"/>
+    <meta name="keywords" content="360"/>
     <meta name="full-screen" content="yes"/>
     <meta name="x5-orientation" content="portrait"/>
     <meta name="browsermode" content="application"/>
@@ -19,90 +20,63 @@
     <meta name="format-detection" content="telephone=no"/>
     <!--把苹果手机浏览器中的菜单栏工具栏隐藏-->
     <meta name="apple-mobile-web-app-capable" content="yes"/>
-    <meta name="apple-mobile-web-app-title" content="360分享">
+    <meta name="apple-mobile-web-app-title" content="360">
     <meta name="apple-mobile-web-app-status-bar-style" content="black" />
     <link rel="icon" href="favicon.ico" type="image/x-icon"/>
-    <!-- jQuery文件 -->
-    <script src="https://cdn.bootcss.com/jquery/1.12.0/jquery.js"></script>
-    <!--样式表文件-->
-    <link rel="stylesheet" href="css/360.css">
+    <style type="text/css">
+        /*--css hack--*/
+        * { margin: 0; padding: 0; font-family: 'PingFangSC-Regular','微软雅黑', 'Arial', sans-serif; -webkit-touch-callout: none; -webkit-user-select: none; -moz-user-select: none; -ms-user-select: none; user-select: none;}
+        body, ul, li, h1, h2, h3, h4, h5, h6, p, form, dl, dt, dd {margin: 0;padding: 0;}
+        img {border-style: none;pointer-events: none;}
+        html{font-size: 100px;}
+        ul,li{list-style: none;}
+        html,body{width: 100%;height: 100%;overflow: hidden;background: #ffffff}
+        body {background-color: #ffffff;margin: 0;overflow: hidden;}
+        a {text-decoration: none;}
+        /*-------------------*/
+        code{color: #f39634;}
+        .wrap{width: 100%;height: 100%;overflow: auto;}
+        .imgBox,.btn_box{width: 3.3rem;height: auto;margin: 0 auto;}
+        .btn_box{line-height: 0.32rem;margin-top: 0.15rem;overflow: hidden;margin-bottom: 0.15rem;text-align: center}
+        .imgBox img{width: 100%;height: auto;vertical-align: top;margin-top: 0.15rem;}
+        .span_style{padding: 0.05rem;line-height: .32rem;font-size: 0.18rem;background: #f39634;border-radius: 0.05rem;}
+        .p_style{line-height: 0.3rem;font-size: .14rem;color: #000000;margin: 0 0.15rem;border-radius: 0.05rem;padding:0.05rem 0.1rem;}
+    </style>
+    <script type="text/javascript">
+
+        var deviceWidth;
+        function getScale() {
+
+            //设置压缩比
+            deviceWidth = document.documentElement.clientWidth >= 720 ? 720 : document.documentElement.clientWidth;
+            document.documentElement.style.fontSize = (deviceWidth / 3.6) + 'px';
+
+        }
+
+        getScale();
+
+        window.addEventListener("resize", function () {
+
+            getScale();
+
+        }, false);
+
+    </script>
 </head>
 <body>
-<div class="wrap" id="wrap">
-    <!--用户信息-->
-    <div class="user_info">
-        <div class="user_head">
-            <img id="img_user_head" src="img/user.jpg">
-        </div>
-        <div class="user_name">
-            <span id="user_name_span">名字是null</span>
-            <span id="create_time_span">2017-08-29 15:52:48</span>
-        </div>
+<div class="wrap">
+    <p class="p_style" style="text-align: center;font-weight:bold;">360分享放大镜版</p>
+    <p class="p_style" style="font-size: 0.12rem;background: #dddddd;">摩斯全景APP配套的产品分享H5，获取后台图片信息，对360度全景图进行<code>无缝拼接</code>，
+        并使之具备<code>自动播放</code>和<code>手动滑动查看</code>的功能。并对原图做了<code>双指缩放</code>查看处理，并设置了缩放后图片移动查看的边界。使用了css3<code>transform</code>做了<code>模拟强制横屏</code>的实现。
+        实现了图片中<code>定点评论的展示</code>。横屏状态下增加了<code>放大镜查看</code>的功能并在放大镜查看时候对界面做了居中处理。根据播放进度设置了<code>直线进度条</code>和放大镜情况下的<code>环形进度条</code>显示。
+        其中放大镜查看的时候同时具备播放和滑动的功能。</p>
+    <div class="imgBox">
+        <img src="img/moispano1.png" alt="">
     </div>
-    <!--全景图-->
-    <div class="scroll-img" id="scroll-img">
-        <div class="scroll-img-box" id="scrollImgBox">
-            <div class="scroll-img-td" id="marquePic1">
-                <img name="pic"
-                     id="main_img_work"
-                     src="img/360.jpg">
-            </div>
-            <div class="scroll-img-td" id="marquePic2"></div>
-        </div>
-        <!--进度条-->
-        <div class="progress_bar">
-            <div class="auto_progress"></div>
-        </div>
-        <!--大放大镜图标-->
-        <div class="big_magnifier">
-            <img id="big_magnifier" src="img/big_fang_da.png">
-            <span>点击放大镜，全景局部放大展示</span>
-        </div>
-        <!--播放暂停按钮-->
-        <div class="button_div" id="switch_div">
-            <img id="switch" src="img/play.png">
-        </div>
-        <!--横竖屏转换按钮-->
-        <div class="turn_div" id="turn_div">
-            <img id="turn" src="img/toVertical.png">
-        </div>
-    </div>
-    <!--放大镜框-->
-    <div class="circleProgress_wrapper" id="circleProgress_wrapper">
-        <div class="wrapper right">
-            <div class="circleProgress rightCircle"></div>
-        </div>
-        <div class="wrapper left">
-            <div class="circleProgress leftCircle"></div>
-        </div>
-        <div class="magnifier_box" id="magnifier_box">
-            <img id="magnifierImg" src="img/360.jpg" alt="放大镜图片">
-        </div>
-    </div>
-    <!--描述-->
-    <div class="describe">
-        <span class="describe_span">北京一日游，13号线西直门站。</span>
-        <!--小放大镜图标-->
-        <div class="magnifier_div" id="magnifier_div">
-            <img id="magnifier" src="img/fang_da.png">
-        </div>
-        <!--评论按钮-->
-        <div class="comment_div" id="comment_div">
-            <img id="comment" src="img/comment_w.png">
-        </div>
-    </div>
-    <!--评论、点赞-->
-    <div class="icon_box">
-        <img class="comment_icon fl" src="./img/comment_icon_black.png" alt=""/>
-        <span class="icon_span fl">6</span>
-        <img class="comment_icon fl" src="./img/parise_icon_black.png" alt=""/>
-        <span id="myText" class="icon_span fl">3</span>
-    </div>
-    <div class="modalImg" id="modalImg">
-        <img id="targetImg" src="./img/360.jpg" style="height: 50%;">
+    <div class="btn_box">
+        <span onclick="javascript:window.location.href='./temp.html'" class="span_style" style="float: left;">360分享模版</span>
     </div>
 </div>
 </body>
-<script type="text/javascript" charset="utf-8" src="js/index.js"></script>
-
 </html>
+
